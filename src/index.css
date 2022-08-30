@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
+
+html {
+    min-width: 600px;
+}
+
+body {
+    margin: 0;
+    font-family: "JetBrains Mono" , Arial, Helvetica, sans-serif;
+}
+
+#content {
+    display: grid;
+    grid-template-columns: 30% 70%;
+    grid-template-rows: minmax(400px, 100vh);
+}
+
+#sidebar {
+    display: flex;
+    flex-direction: column;
+    background-color: gray;
+}
+
+#sidebar > * {
+    margin: 5%;
+}
+
+#logo-div {
+    display: flex;
+    column-gap: 5%;
+}
+
+#projects-list {
+    padding: 0;
+}
