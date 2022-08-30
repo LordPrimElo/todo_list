@@ -8,6 +8,7 @@
     <title>To Do List</title>
 </head>
 <body>
+    
     <div id="content">
         <aside id="sidebar">
             <div id="logo-div">
@@ -17,10 +18,13 @@
             <div id="projects-div">
                 <h1>Projects</h1>
                 <ul id="projects-list">
-                    <div class="project">Coding</div>
+
                 </ul>
-                <form class="hidden"><input type="text" placeholder="Write a project name!" required></form>
-                <button id="add-todo">Add</button>
+                <form id="add-form-main">
+                    <input id="add-form" class="hidden" type="text" placeholder="Write a project name!" name="projectName" required>
+                    <button id="add-todo">Add</button>
+                </form>
+                
             </div>
             <div id="categories-div">
                 <div>
