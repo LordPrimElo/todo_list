@@ -27,12 +27,13 @@ const Project = (name) => {
 // Helper Functions
 
 const displayProjects = () => {
+    projectsList.innerHTML = ""  
     projects.forEach(project => {
 
         const projectElement = document.createElement("div")
         projectElement.innerText = project._name
-
         projectElement.classList.add("project")
+
         projectsList.appendChild(projectElement)
     })
 }
@@ -42,14 +43,17 @@ const addProject = (project) => {
     displayProjects()
 }
 
+form.onreset = () => {
+    addForm.classList.remove("hidden")
+    addBtn.setAttribute("type", "submit")
+}
 
-addBtn.onclick = () => {
-    if (addForm.classList.contains("hidden")) {
-        addForm.classList.remove("hidden")
+form.onsubmit = e => {
+    e.preventDefault()
 
-    } else {
-        addForm.classList.add("hidden")
+    addForm.classList.add("hidden")
+    addBtn.setAttribute("type", "reset")
 
-        console.log("fdhh")
-    }
+    addProject(Project(form.elements["projectName"].value))
+
 }
