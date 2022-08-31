@@ -31,7 +31,17 @@ const displayProjects = () => {
     projects.forEach(project => {
 
         const projectElement = document.createElement("div")
-        projectElement.innerText = project._name
+        projectElement.innerHTML = `<p>${project._name}</p>`
+
+        const cross = document.createElement("p")
+        cross.innerText = "X"
+
+        cross.onclick = () => {
+            projects.splice(projects.indexOf(project), 1)
+            displayProjects()
+        }
+
+        projectElement.appendChild(cross)
         projectElement.classList.add("project")
 
         projectsList.appendChild(projectElement)
