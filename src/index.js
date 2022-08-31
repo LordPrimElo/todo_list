@@ -1,31 +1,46 @@
 // DOM Element Declarations
-const projectsList = document.getElementById("projects-list")
-const addBtn = document.getElementById("add-todo")
-const addForm = document.getElementById("add-form")
-const form = document.getElementById("add-form-main")
+const projectsList = document.getElementById("projects-list"),
+    addBtn = document.getElementById("add-todo"),
+    addInput = document.getElementById("add-form"),
+    addForm = document.getElementById("add-form-main"),
+    todoList = document.getElementById("todo-list"),
+    addTodoForm = document.getElementById("add-todo-form"),
+    addTodoInput = document.getElementById("add-todo-input"),
+    addTodo = document.getElementById("add-todo"),
+    main = document.getElementById("main")
+ 
+
 
 // Constants
 const projects = new Array
 
 // Project Factory Function
+const Todo = (title, description, dueDate, priority) => {
+
+
+    return { title, description, dueDate, priority }
+
+}
+
 const Project = (name) => {
     const _name = name
 
     const todos = []
 
-    const addTodo = (toDo) => {
-        todos.push(toDo)
+    const addTodo = (title, description, dueDate, priority) => {
+        todos.push(Todo(title, description, dueDate, priority))
     }
 
     const removeTodo = (toDo) => {
         todos.splice(todos.indexOf(toDo), 1)
     }
 
-    return { addTodo, removeTodo, _name }
+    const showTodos = () => { return todos }
+
+    return { addTodo, removeTodo, showTodos, _name }
 }
 
 // Helper Functions
-
 const displayProjects = () => {
     projectsList.innerHTML = ""  
     projects.forEach(project => {
@@ -44,6 +59,10 @@ const displayProjects = () => {
         projectElement.appendChild(cross)
         projectElement.classList.add("project")
 
+        projectElement.onclick = () => {
+            displayTodos(project)
+        }
+
         projectsList.appendChild(projectElement)
     })
 }
@@ -53,17 +72,56 @@ const addProject = (project) => {
     displayProjects()
 }
 
-form.onreset = () => {
-    addForm.classList.remove("hidden")
+const displayTodos = project => {
+    const projectTitle = document.createElement("h1")
+    projectTitle.innerText = project._name
+
+    todoList.parentNode.appendChild(projectTitle)
+
+    project.showTodos().forEach(todo => {
+        const todoElement = document.createElement("div")
+        todoElement.classList.add("todo")
+
+        const todoTitle = document.createElement("p")
+        todoTitle.innerText = todo.title
+
+        todoElement.appendChild(todoTitle)
+
+
+        todoList.appendChild(todoElement)
+
+    })
+}
+
+
+// Add Projects
+addForm.onreset = () => {
+    addInput.classList.remove("hidden")
     addBtn.setAttribute("type", "submit")
 }
 
-form.onsubmit = e => {
+addForm.onsubmit = e => {
     e.preventDefault()
 
-    addForm.classList.add("hidden")
+    addInput.classList.add("hidden")
     addBtn.setAttribute("type", "reset")
 
-    addProject(Project(form.elements["projectName"].value))
+    addProject(Project(addForm.elements["projectName"].value))
+
+}
+
+
+
+addTodoForm.onreset = () => {
+    addTodoInput.classList.remove("hidden")
+    addTodo.setAttribute("type", "submit")
+}
+
+addTodoForm.onsubmit = e => {
+    e.preventDefault()
+
+    addTodoInput.classList.add("hidden")
+    addTodo.setAttribute("type", "reset")
+
 
 }
