@@ -1,25 +1,25 @@
 // DOM Element Declarations
 const projectsList = document.getElementById("projects-list"),
-    addBtn = document.getElementById("add-todo"),
+    addBtn = document.getElementById("add-project"),
     addInput = document.getElementById("add-form"),
     addForm = document.getElementById("add-form-main"),
     todoList = document.getElementById("todo-list"),
     addTodoForm = document.getElementById("add-todo-form"),
-    addTodoInput = document.getElementById("add-todo-input"),
+    addTodoInput = document.getElementById("add-todo-input-name"),
+    addTodoDesc = document.getElementById("add-todo-input-desc"),
+    addTodoDue = document.getElementById("add-todo-input-due"),
     addTodo = document.getElementById("add-todo"),
     main = document.getElementById("main")
  
 
-
 // Constants
-const projects = new Array
+const projects = new Array()
+let activeProject = new Object()
+
 
 // Project Factory Function
-const Todo = (title, description, dueDate, priority) => {
-
-
-    return { title, description, dueDate, priority }
-
+const Todo = (title, description, dueDate) => {
+    return { title, description, dueDate }
 }
 
 const Project = (name) => {
@@ -27,17 +27,15 @@ const Project = (name) => {
 
     const todos = []
 
-    const addTodo = (title, description, dueDate, priority) => {
-        todos.push(Todo(title, description, dueDate, priority))
+    const addTodo = (title, description, dueDate) => {
+        todos.push(Todo(title, description, dueDate))
     }
 
     const removeTodo = (toDo) => {
         todos.splice(todos.indexOf(toDo), 1)
     }
 
-    const showTodos = () => { return todos }
-
-    return { addTodo, removeTodo, showTodos, _name }
+    return { addTodo, removeTodo, todos, _name }
 }
 
 // Helper Functions
@@ -61,6 +59,7 @@ const displayProjects = () => {
 
         projectElement.onclick = () => {
             displayTodos(project)
+            activeProject = project
         }
 
         projectsList.appendChild(projectElement)
@@ -73,12 +72,21 @@ const addProject = (project) => {
 }
 
 const displayTodos = project => {
+    main.childNodes.forEach(child => {
+
+        if (child === todoList) {
+            todoList.innerHTML = ""
+        } else if (child !== addTodoForm) {
+            main.removeChild(child)
+        } 
+    })
+
     const projectTitle = document.createElement("h1")
     projectTitle.innerText = project._name
 
-    todoList.parentNode.appendChild(projectTitle)
+    main.appendChild(projectTitle)
 
-    project.showTodos().forEach(todo => {
+    project.todos.forEach(todo => {
         const todoElement = document.createElement("div")
         todoElement.classList.add("todo")
 
@@ -114,14 +122,25 @@ addForm.onsubmit = e => {
 
 addTodoForm.onreset = () => {
     addTodoInput.classList.remove("hidden")
+    addTodoDesc.classList.remove("hidden")
+    addTodoDue.classList.remove("hidden")
+
     addTodo.setAttribute("type", "submit")
+
+    console.log("Form opened")
 }
 
 addTodoForm.onsubmit = e => {
     e.preventDefault()
 
     addTodoInput.classList.add("hidden")
+    addTodoDesc.classList.add("hidden")
+    addTodoDue.classList.add("hidden")
     addTodo.setAttribute("type", "reset")
 
+    const { todoName, todoDesc, todoDue } = addTodoForm.elements
 
+    activeProject.addTodo(todoName.value, todoDesc.value, todoDue.value)
+
+    displayTodos(activeProject)
 }

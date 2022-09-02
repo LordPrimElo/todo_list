@@ -22,7 +22,7 @@
                 </ul>
                 <form id="add-form-main">
                     <input id="add-form" class="hidden" type="text" placeholder="Write a project name!" name="projectName" required autofocus>
-                    <button id="add-todo" type="reset">Add</button>
+                    <button id="add-project" type="reset">Add</button>
                 </form>
                 
             </div>
@@ -40,7 +40,10 @@
 
             </ul>
             <form id="add-todo-form">
-                <input id="add-todo-input" class="hidden" type="text" placeholder="Add something to do!" name="todoName" required autofocus>
+                <input id="add-todo-input-name" class="hidden" type="text" placeholder="Add something to do!" name="todoName" required autofocus>
+                <input id="add-todo-input-desc" class="hidden" type="text" placeholder="Describe what to do!" name="todoDesc" required>
+                <input id="add-todo-input-due" class="hidden" type="date" placeholder="When's this due?" name="todoDue" required>
+
                 <button id="add-todo" type="reset">Add</button>
             </form>
         </main>
