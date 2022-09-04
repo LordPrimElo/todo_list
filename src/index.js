@@ -46,22 +46,34 @@ const displayProjects = () => {
         const projectElement = document.createElement("div")
         projectElement.innerHTML = `<p>${project._name}</p>`
 
-        const cross = document.createElement("p")
-        cross.innerText = "X"
-
-        cross.onclick = () => {
-            projects.splice(projects.indexOf(project), 1)
-            displayProjects()
-        }
-
-        projectElement.appendChild(cross)
         projectElement.classList.add("project")
 
-        projectElement.onclick = () => {
+        projectElement.querySelector("p").onclick = () => {
+            todoList.innerHTML = ""
+            if (main.querySelector("H1")) {
+                main.querySelector("h1").parentNode.removeChild(main.querySelector("h1"))
+            }
+
             displayTodos(project)
             activeProject = project
         }
 
+        const cross = document.createElement("p")
+        cross.innerText = "X"
+
+        cross.onclick = () => {
+            activeProject = new Object()
+
+            projects.splice(projects.indexOf(project), 1)
+
+            displayProjects()
+
+            todoList.innerHTML = ""
+            main.querySelector("h1").parentNode.removeChild(main.querySelector("h1"))
+            
+        }
+
+        projectElement.appendChild(cross)
         projectsList.appendChild(projectElement)
     })
 }
