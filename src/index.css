@@ -11,14 +11,17 @@ body {
 
 #content {
     display: grid;
-    grid-template: 90% 10% / 20% 80%;
-    grid-template-rows: minmax(400px, 100vh);
+    grid-template-columns: 20% 80%;
+    min-height: 100vh;
+    height: 100%;
+    overflow: scroll;
 }
 
 #sidebar {
     display: flex;
     flex-direction: column;
     background-color: gray;
+    height: 100%;
 }
 
 #sidebar > * {
@@ -92,10 +95,60 @@ body {
     font-size: 1.25rem;
 }
 
+#main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#project-title {
+    margin-top: 3rem;
+    font-size: 3rem;
+}
+
+#todo-list {
+    padding: 0;
+    font-size: 3rem;
+}
+
+#add-todo {
+    width: 25rem;
+    height: 3rem;
+    font-size: 2rem;
+    border-radius: 2000px;
+    border: 5px black solid;
+    padding-bottom: 2.8rem;
+    margin: 2rem 0;
+}
+
+#add-todo > * {
+    margin: 0; 
+    padding: 0;
+}
+
+#add-todo-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin: 5%;
+
+}
+
+#add-todo-form > *:not(#add-todo) {
+    text-align: center;
+    margin: 0.5rem;
+    height: 4vh;
+    border-radius: 10px;
+    border: #909090 5px solid;
+    color: black;
+    font-size: 1.25rem;
+    width: 50%;
+}
+
 #footer {
     display: flex;
     width: 100vw;
-    grid-column:  2 span;
     background-color: black;
 }
 

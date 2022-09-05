@@ -9,7 +9,9 @@ const projectsList = document.getElementById("projects-list"),
     addTodoDesc = document.getElementById("add-todo-input-desc"),
     addTodoDue = document.getElementById("add-todo-input-due"),
     addTodo = document.getElementById("add-todo"),
-    main = document.getElementById("main")
+    main = document.getElementById("main"),
+    projectTitle = document.getElementById("project-title")
+
  
 
 // Constants
@@ -50,9 +52,7 @@ const displayProjects = () => {
 
         projectElement.querySelector("p").onclick = () => {
             todoList.innerHTML = ""
-            if (main.querySelector("H1")) {
-                main.querySelector("h1").parentNode.removeChild(main.querySelector("h1"))
-            }
+            projectTitle.innerText = ""
 
             displayTodos(project)
             activeProject = project
@@ -67,10 +67,8 @@ const displayProjects = () => {
             projects.splice(projects.indexOf(project), 1)
 
             displayProjects()
-
             todoList.innerHTML = ""
-            main.querySelector("h1").parentNode.removeChild(main.querySelector("h1"))
-            
+            projectTitle.innerText = ""         
         }
 
         projectElement.appendChild(cross)
@@ -84,19 +82,10 @@ const addProject = (project) => {
 }
 
 const displayTodos = project => {
-    main.childNodes.forEach(child => {
+    
+    todoList.innerHTML = ""
 
-        if (child === todoList) {
-            todoList.innerHTML = ""
-        } else if (child !== addTodoForm) {
-            main.removeChild(child)
-        } 
-    })
-
-    const projectTitle = document.createElement("h1")
     projectTitle.innerText = project._name
-
-    main.appendChild(projectTitle)
 
     project.todos.forEach(todo => {
         const todoElement = document.createElement("div")
@@ -138,8 +127,6 @@ addTodoForm.onreset = () => {
     addTodoDue.classList.remove("hidden")
 
     addTodo.setAttribute("type", "submit")
-
-    console.log("Form opened")
 }
 
 addTodoForm.onsubmit = e => {
