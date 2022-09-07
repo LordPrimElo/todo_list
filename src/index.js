@@ -12,7 +12,6 @@ const projectsList = document.getElementById("projects-list"),
     main = document.getElementById("main"),
     projectTitle = document.getElementById("project-title")
 
- 
 
 // Constants
 const projects = new Array()
@@ -94,12 +93,69 @@ const displayTodos = project => {
         const todoTitle = document.createElement("p")
         todoTitle.innerText = todo.title
 
-        todoElement.appendChild(todoTitle)
+        const todoDesc = document.createElement("p")
+        todoDesc.innerText = todo.description
 
+        const todoDate = document.createElement("p")
+        todoDate.innerText = 
+            `${makeAReadableDate(
+                todo.dueDate.getDay(), 
+                todo.dueDate.getDate(), 
+                todo.dueDate.getMonth()
+            )} ${todo.dueDate.getFullYear()}`
+
+        const textDiv = document.createElement("div")
+
+        textDiv.appendChild(todoTitle)
+        textDiv.appendChild(todoDesc)
+
+        const cross = document.createElement("p")
+        cross.innerText = "X"
+
+        cross.onclick = () => {
+
+            project.removeTodo(todo)
+
+            displayTodos(project)        
+        }
+
+        todoElement.appendChild(textDiv)
+        todoElement.appendChild(todoDate)
+        todoElement.appendChild(cross)
 
         todoList.appendChild(todoElement)
 
     })
+}
+
+const makeAReadableDate = (day, date, month)=> {
+    const days = [
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday"
+    ]
+
+    const months = [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec"
+    ]
+
+    return `${days[day]}, ${date} ${months[month]}`
+
 }
 
 
@@ -139,7 +195,7 @@ addTodoForm.onsubmit = e => {
 
     const { todoName, todoDesc, todoDue } = addTodoForm.elements
 
-    activeProject.addTodo(todoName.value, todoDesc.value, todoDue.value)
+    activeProject.addTodo(todoName.value, todoDesc.value, todoDue.valueAsDate)
 
     displayTodos(activeProject)
 }
